@@ -5,6 +5,5 @@ const SearchBox = ({ value, onChange, onSubmit }) => (
         <input type="text" value={value} onChange={onChange} />
         <button type="submit">+ Agregar</button>
     </form>
-)
-
+);
 export default SearchBox;

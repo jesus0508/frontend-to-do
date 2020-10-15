@@ -7,20 +7,22 @@ const TaskItem = ({ index, task, onUpdate, onDelete }) => {
             <div>
                 <label>
                     <input type="checkbox" id={id} />
+                    {description}
                 </label>
-                <span>{description}</span>
             </div>
             <div>
-                <button onClick={() => onUpdate(id, index)}
-                    type="button">
-                    Editar
+                <span>
+                    <button onClick={() => onUpdate(id, index)}
+                        type="button">
+                        Editar
                 </button>
-            </div>
-            <div>
-                <button onClick={() => onDelete(id, index)}
-                    type="button">
-                    Eliminar
+                </span>
+                <span>
+                    <button onClick={() => onDelete(id, index)}
+                        type="button">
+                        Eliminar
                 </button>
+                </span>
             </div>
         </div>
     );

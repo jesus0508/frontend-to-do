@@ -22,7 +22,7 @@ class Tasks extends React.Component {
         return (
             <div>
                 <Header />
-                <SearchBox value={this.newTaskDescription}
+                <SearchBox value={this.state.newTaskDescription}
                     onChange={this.onInputChange}
                     onSubmit={this.onSubmit} />
                 <TaskList tasks={this.state.tasks}
@@ -56,7 +56,7 @@ class Tasks extends React.Component {
         fetchTask(options)
             .then(task => {
                 const tasks = [...this.state.tasks, task]
-                this.setState({ tasks });
+                this.setState({ newTaskDescription: " ", tasks });
             })
             .catch(console.log);
         event.preventDefault();
