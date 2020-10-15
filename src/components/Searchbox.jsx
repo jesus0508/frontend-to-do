@@ -1,10 +1,10 @@
 import React from "react";
 
-const SearchBox = () => (
-    <div>
-        <input type="text" />
-        <button>+ Agregar</button>
-    </div>
+const SearchBox = ({ value, onChange, onSubmit }) => (
+    <form onSubmit={onSubmit}>
+        <input type="text" value={value} onChange={onChange} />
+        <button type="submit">+ Agregar</button>
+    </form>
 )
 
 export default SearchBox;

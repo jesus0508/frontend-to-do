@@ -1,20 +1,26 @@
 import React from "react";
 
-const TaskItem = ({ task }) => {
-    const {id, description, state} = task;
+const TaskItem = ({ index, task, onUpdate, onDelete }) => {
+    const { id, description, state } = task;
     return (
-        <div key={id}>
+        <div key={index}>
             <div>
                 <label>
-                    <input type="checkbox" id={id} checked={state} />
+                    <input type="checkbox" id={id} />
                 </label>
                 <span>{description}</span>
             </div>
             <div>
-                <button>Eliminar</button>
+                <button onClick={() => onUpdate(id, index)}
+                    type="button">
+                    Editar
+                </button>
             </div>
             <div>
-                <button>Editar</button>
+                <button onClick={() => onDelete(id, index)}
+                    type="button">
+                    Eliminar
+                </button>
             </div>
         </div>
     );
