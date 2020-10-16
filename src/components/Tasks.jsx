@@ -20,7 +20,7 @@ class Tasks extends React.Component {
 
     render() {
         return (
-            <div>
+            <>
                 <Header />
                 <SearchBox value={this.state.newTaskDescription}
                     onChange={this.onInputChange}
@@ -28,7 +28,7 @@ class Tasks extends React.Component {
                 <TaskList tasks={this.state.tasks}
                     onUpdate={this.onUpdate}
                     onDelete={this.onDelete} />
-            </div>
+            </>
         );
     }
 
