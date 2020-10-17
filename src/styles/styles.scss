@@ -72,11 +72,10 @@ input[type=text] {
     }
 }
 
-
 .list-item{
     border: 1px solid $secundaryColor;
     padding: 0.25rem 0.5rem;
-    height: 250px;
+    min-height: 250px;
     .item{
         display: flex;
         justify-content: space-between;
@@ -96,8 +95,48 @@ input[type=text] {
         }
     }
     input[type=text]{
+        color: $fontColor;
         flex: 0 0 100%;
     }
 }
 
+  .modal {
+    position:fixed;
+    padding: 1rem;
+    background: $primaryColor;
+    border-radius: 0.75rem;
+    border: 1px solid $borderColor;
+    width: 33%;
+    height: auto;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+  }
 
+  .modal-header{
+    margin-bottom: 1rem;
+  }
+
+  .modal-content{
+    margin-bottom: 2rem;
+    .text-center{
+        text-align: center;
+    }
+    button:hover{
+        transform: scale(0.9);
+        background: #31708f;
+    }
+  }
+
+  .modal-footer{
+      display: flex;
+      justify-content: flex-end;
+      button{
+            color: $secundaryColor;
+            background-color: transparent;
+            border: none;
+            margin: 0 1rem;
+      }
+  }
+
+  

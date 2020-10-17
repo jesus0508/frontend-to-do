@@ -1,19 +1,13 @@
 import React from "react";
 import TaskItem from "./TaskItem";
 
-const TaskList = ({ tasks, value, onChange, onUpdate, onDelete }) => {
-    let index = 0;
+const TaskList = ({ tasks, onClick }) => {
+    console.log(tasks);
     return (
         <div className="list-item">
-            {tasks.map(task =>
-                <TaskItem key={task.id}
-                    index={index++}
-                    task={task}
-                    value={value}
-                    onChange={onChange}
-                    onUpdate={onUpdate}
-                    onDelete={onDelete} />
-            )}
+            {tasks.map(task => (
+                <TaskItem key={task.id} task={task} onClickDelete={onClick} />
+            ))}
         </div>
     );
 };

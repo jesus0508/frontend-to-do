@@ -2,26 +2,25 @@ import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 
-const TaskItemShow = ({ index, task, onClickEditButton, onClickDeleteButton }) => {
-    const { id, description, state } = task;
+const TaskItemShow = ({ id, description, state, onClickDelete, onClickUpdate, onChange }) => {
 
     return (
         <div className="item">
             <div>
                 <label>
-                    <input type="checkbox" id={id} />
+                    <input type="checkbox" checked={state} onChange={onChange} />
                     <span>{description}</span>
                 </label>
             </div>
             <div>
                 <span className="button">
-                    <button onClick={onClickEditButton}
+                    <button onClick={onClickUpdate}
                         type="button">
                         <FontAwesomeIcon icon={faEdit} />
                     </button>
                 </span>
                 <span className="button">
-                    <button onClick={() => onClickDeleteButton(id, index)}
+                    <button onClick={() => onClickDelete({ id, description, state })}
                         type="button">
                         <FontAwesomeIcon icon={faTrashAlt} />
                     </button>

@@ -2,36 +2,36 @@ import React from "react";
 import TaskList from "./TaskList";
 import Header from "./Header";
 import SearchBox from "./Searchbox";
-
-const URI_BASE = "http://localhost:8080/tasks";
+import Modal from "./Modal";
+import fetchTask from "../helpers/script";
 
 class Tasks extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            newTaskDescription: "",
-            updatedTaskDescription: "",
+            taskDescription: "",
+            modal: false,
+            taskToDelete: null,
             tasks: []
         };
         this.onSubmit = this.onSubmit.bind(this);
-        this.onUpdate = this.onUpdate.bind(this);
         this.onDelete = this.onDelete.bind(this);
-        this.handleNewTaskDescriptionChange = this.handleNewTaskDescriptionChange.bind(this);
-        this.onInputEditChange = this.onInputEditChange.bind(this);
+        this.handleTaskDescriptionChange = this.handleTaskDescriptionChange.bind(this);
+        this.hideModal = this.hideModal.bind(this);
+        this.showModal = this.showModal.bind(this);
     }
 
     render() {
         return (
             <>
                 <Header />
-                <SearchBox value={this.state.newTaskDescription}
-                    onChange={this.handleNewTaskDescriptionChange}
+                <SearchBox
+                    value={this.state.taskDescription}
+                    onChange={this.handleTaskDescriptionChange}
                     onSubmit={this.onSubmit} />
-                <TaskList tasks={this.state.tasks}
-                    value={this.state.updatedTaskDescription}
-                    onChange={this.onInputEditChange}
-                    onUpdate={this.onUpdate}
-                    onDelete={this.onDelete} />
+                <TaskList
+                    tasks={this.state.tasks} onClick={this.showModal} />
+                {this.state.modal && <Modal task={this.state.taskToDelete} onDelete={this.onDelete} onClick={this.hideModal} />}
             </>
         );
     }
@@ -45,72 +45,51 @@ class Tasks extends React.Component {
     }
 
     onSubmit(event) {
-        const { newTaskDescription } = this.state;
+        const { taskDescription } = this.state;
         const options = {
             method: 'POST',
             data: {
-                description: newTaskDescription,
+                description: taskDescription,
                 state: false
             }
         };
         fetchTask(options)
             .then(task => {
                 const tasks = [...this.state.tasks, task]
-                this.setState({ newTaskDescription: " ", tasks });
+                this.setState({ taskDescription: " ", tasks });
             })
             .catch(console.log);
         event.preventDefault();
     }
 
-    onUpdate(id, index) {
-        const { updatedTaskDescription } = this.state;
-        const options = {
-            method: 'PUT',
-            data: { updatedTaskDescription }
-        };
-        fetchTask(options, `/${id}`)
-            .then(task => {
-                const tasks = this.state.tasks;
-                tasks[index] = task;
-                this.setState({ tasks });
-            })
-            .catch(console.log);
-    }
-
-    onDelete(id, index) {
+    onDelete(id) {
         const options = {
             method: 'DELETE',
             data: { id }
         };
         fetchTask(options, `/${id}`)
             .then(id => {
-                const tasks = this.state.tasks;
-                tasks.splice(index, 1);
-                this.setState({ tasks });
+                const tasks = this.state.tasks.filter(task => task.id !== id);
+                console.log(tasks);
+                this.setState({ tasks: tasks, modal: false });
             })
             .catch(console.log);
     }
 
-    handleNewTaskDescriptionChange(event) {
-        this.setState({ newTaskDescription: event.target.value });
+    handleTaskDescriptionChange(event) {
+        this.setState({ taskDescription: event.target.value });
     }
 
-    onInputEditChange(event) {
-        this.setState({ updatedTaskDescription: event.target.value });
-        console.log(this.state.updatedTaskDescription);
+    hideModal() {
+        this.setState({ modal: false })
     }
+
+    showModal(task) {
+        this.setState({ taskToDelete: task, modal: true })
+    }
+
 }
 
-const fetchTask = (options = {}, endpoint = "") => {
-    const init = {
-        method: options.method,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(options.data)
-    };
-    return fetch(URI_BASE + endpoint, init).then(resp => resp.json());
-}
+
 
 export default Tasks;

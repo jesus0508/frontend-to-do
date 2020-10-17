@@ -1,8 +1,8 @@
 import React from "react";
 
-const TaskItemEdit = ({ index, task, value, onChange, onUpdate }) => {
+const TaskItemEdit = ({ value, onChange, onSubmit}) => {
     return (
-        <form onSubmit={() => onUpdate(task.id, index)} className="item">
+        <form onSubmit={onSubmit} className="item">
             <input type="text" onChange={onChange} value={value} className="full-parent" />
         </form>
     );
