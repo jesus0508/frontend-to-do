@@ -10,12 +10,14 @@ class Tasks extends React.Component {
         super(props);
         this.state = {
             newTaskDescription: "",
+            updatedTaskDescription: "",
             tasks: []
         };
         this.onSubmit = this.onSubmit.bind(this);
-        this.onInputChange = this.onInputChange.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
         this.onDelete = this.onDelete.bind(this);
+        this.handleNewTaskDescriptionChange = this.handleNewTaskDescriptionChange.bind(this);
+        this.onInputEditChange = this.onInputEditChange.bind(this);
     }
 
     render() {
@@ -23,9 +25,11 @@ class Tasks extends React.Component {
             <>
                 <Header />
                 <SearchBox value={this.state.newTaskDescription}
-                    onChange={this.onInputChange}
+                    onChange={this.handleNewTaskDescriptionChange}
                     onSubmit={this.onSubmit} />
                 <TaskList tasks={this.state.tasks}
+                    value={this.state.updatedTaskDescription}
+                    onChange={this.onInputEditChange}
                     onUpdate={this.onUpdate}
                     onDelete={this.onDelete} />
             </>
@@ -38,10 +42,6 @@ class Tasks extends React.Component {
                 this.setState({ tasks })
             })
             .catch(console.log);
-    }
-
-    onInputChange(event) {
-        this.setState({ newTaskDescription: event.target.value });
     }
 
     onSubmit(event) {
@@ -63,9 +63,10 @@ class Tasks extends React.Component {
     }
 
     onUpdate(id, index) {
+        const { updatedTaskDescription } = this.state;
         const options = {
             method: 'PUT',
-            data: { id }
+            data: { updatedTaskDescription }
         };
         fetchTask(options, `/${id}`)
             .then(task => {
@@ -88,6 +89,15 @@ class Tasks extends React.Component {
                 this.setState({ tasks });
             })
             .catch(console.log);
+    }
+
+    handleNewTaskDescriptionChange(event) {
+        this.setState({ newTaskDescription: event.target.value });
+    }
+
+    onInputEditChange(event) {
+        this.setState({ updatedTaskDescription: event.target.value });
+        console.log(this.state.updatedTaskDescription);
     }
 }
 

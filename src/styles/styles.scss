@@ -44,18 +44,19 @@ body{
     }
 }
 
+input[type=text] {
+    background-color: $inputColor;
+    border: 1px solid $secundaryColor;
+    padding: 0.25rem;
+    flex: 0 0 80%;
+}
+
 .task-form{
     display: flex;
     margin-bottom: 1rem;
     *{
         color: $fontColor;
         margin: 0 0.25rem;
-    }
-    input[type=text] {
-        background-color: $inputColor;
-        border: 1px solid $secundaryColor;
-        padding: 0.25rem;
-        flex: 0 0 80%;
     }
     button {
         background-color: $secundaryColor;
@@ -94,7 +95,9 @@ body{
             border: none;
         }
     }
+    input[type=text]{
+        flex: 0 0 100%;
+    }
 }
-
 
 
