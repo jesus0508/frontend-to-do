@@ -37,7 +37,7 @@ const TaskItem = ({ task, onClickDelete }) => {
         };
         fetchTask(options, `/${task.id}`)
             .then(newTask => {
-                //console.log(newTask);
+                //12console.log(newTask);
             })
             .catch(console.log);
     }, [taskDescription, taskState]);
